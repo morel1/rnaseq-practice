@@ -2,7 +2,7 @@
 rnaseq bash sripts practice
 
 
-This practice script assumes that the following tools are installed:
+This practice script assumes that the following tools are installed and in PATH:
 
 
     - SAMtools, bam-readcount, HISAT2, StringTie
