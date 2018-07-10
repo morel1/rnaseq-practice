@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#need gtf and fa files for indexing
+read -p 'Please select gtf file for indexing: ' GTF_FILE
+read -p 'please select fa file for indexing: ' FA_FILE
+
+mkdir index_files
+
+#invoke HISAT2 to get splicesites and exons
+hisat2_extract_splice_sites.py $GTF_FILE > ./index_files/splicesites.tsv
+hisat2_extract_exons.py $GTF_FILE > ./index_files/exons.tsv
+
+#build index
+read -p 'How many threads: ' thrd
+hisat2-build -p $thrd --ss ./index_files/splicesites.tsv --exon ./index_files/exons.tsv $FA_FILE
