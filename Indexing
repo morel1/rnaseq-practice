@@ -1,19 +1,25 @@
-#!/bin/bash
+# !/bin/bash
 
-#need gtf and fa files for indexing
-echo Make SURE FILES HAVE APPROPRIATE EXTENSIONS
+# need gtf and fa files for indexing
+echo 'MAKE SURE FILES HAVE APPROPRIATE EXTENSIONS'
+echo
 read -e -p 'Please select .gtf file directory for indexing: ' GTF_FILE
+echo "You entered: $GTF_FILE"
 read -e -p 'Please select .fa file directory for indexing: ' FA_FILE
+echo "You entered: $FA_FILE"
 
+set -o errexit 
 #check to see if the files are correct
 if [[  $GTF_FILE == *.gtf  &&  $FA_FILE == *.fa  ]]
 then
-    #files are accepted and will continue through HISAT2 processing
+    # files are accepted and will continue through HISAT2 processing
     mkdir index_files
     hisat2_extract_splice_sites.py $GTF_FILE > ./index_files/splicesites.tsv
     hisat2_extract_exons.py $GTF_FILE > ./index_files/exons.tsv
     read -p 'How many threads?: ' thrd
-    hisat2-build -p $thrd --ss ./index_files/splicesites.tsv --exon ./index_files/exons.tsv $FA_FILE ./index_files/index     
+    hisat2-build -p $thrd --ss ./index_files/splicesites.tsv --exon ./index_files/exons.tsv $FA_FILE ./index_files/index
+    echo 'INDEXING COMPLETE'
 else
-    exit 'FILES COULD NOT BE READ'
+    printf 'ERROR: INPUT FILE DOES NOT HAVE CORRECT EXTENSION\n' >&2
+    exit 1
 fi
