@@ -9,7 +9,7 @@ read -p 'Are the reads paired? (y/n): ' RDPR
 read -e -p 'Select output directory (ex. path/to/filename.fastq.g)z: ' OTDIR
 echo "You have selected $OTDIR"
 
-# Add flexbar options as wanted to this script
+# Add flexbar options as wanted to this script on lines 17 or 23
 # For single reads
 if [ "$RDPR" == "n" ];                                                                               
 then                                                                                             
