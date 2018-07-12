@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Created for post-trim alignment
-# CPU Setings in line 15, change as needed
 # Set file info
 read -p 'Read group ID:' RGID
 read -p 'Read group sample name:' RSM
