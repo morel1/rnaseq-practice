@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 
 # need gtf and fa files for indexing
 echo 'MAKE SURE FILES HAVE APPROPRIATE EXTENSIONS'
@@ -16,10 +16,11 @@ then
     mkdir index_files
     hisat2_extract_splice_sites.py $GTF_FILE > ./index_files/splicesites.tsv
     hisat2_extract_exons.py $GTF_FILE > ./index_files/exons.tsv
-    read -p 'How many threads?: ' thrd
-    hisat2-build -p $thrd --ss ./index_files/splicesites.tsv --exon ./index_files/exons.tsv $FA_FILE ./index_files/index
-    echo 'INDEXING COMPLETE'
+    read -p 'How many threads?: ' THRD
+    hisat2-build -p $THRD --ss ./index_files/splicesites.tsv --exon ./index_files/exons.tsv $FA_FILE ./index_files/index
 else
-    printf 'ERROR: INPUT FILE DOES NOT HAVE CORRECT EXTENSION\n' >&2
+    printf "ERROR: INPUT FILE DOES NOT HAVE CORRECT EXTENSION\n" >&2
     exit 1
 fi
+echo
+echo 'INDEXING COMPLETE'
