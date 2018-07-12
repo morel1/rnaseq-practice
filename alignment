@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Created for post-trim alignment
+# CPU Setings in line 15, change as needed
+# Set file info
+read -p 'Read group ID:' RGID
+read -p 'Read group sample name:' RSM
+read -p 'Read group library name:' RLB
+read -p 'Read group sequencing platform:' RSP
+read -p 'Read group sequencing platform unit:' RPU
+read -e -p 'Index file directory:' IFD
+read -e -p 'Read 1 file directory (a .fastq.gz file):' DF_1
+read -e -p 'Read 2 file directory (a .fastq.gz file):' DF_2
+read -e -p 'Output file directory (ex. path/to/filename.sam):' OTDIR
+
+#Use information to create the .sam file using hisat2 MODIFY AS NEEDED
+hisat2 --rg-id=$RGID --rg SM:$RSM --rg LB:$RLB --rg PL:$RSP --rg PU:$RPU -x $IFD --rna-strandness RF -1 $DF_1 -2 $DF_2 -S $OTDIR
+echo 'Completed and .sam file created'
+
+# Converting .sam into .bam
+read -p 'Name of .bam file' NBM
+samtools sort -o $NBM $OTDIR
+
